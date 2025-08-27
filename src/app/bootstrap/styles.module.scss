@@ -1,0 +1,47 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  text-align: center;
+  font-size: 72px;
+  color: cadetblue;
+}
+
+.container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1024px;
+  row-gap: 32px;
+}
+
+.logo {
+  width: 40%;
+  height: 40%;
+  animation: rotation 4s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.link {
+  text-decoration: none;
+  font-size: 64px;
+  color: cadetblue;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    color: aquamarine;
+  }
+
+  &:active {
+    color: rgb(57, 110, 92);
+  }
+}
