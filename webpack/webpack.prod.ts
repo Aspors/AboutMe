@@ -1,11 +1,14 @@
 export {};
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.ts");
+const path = require("path");
+
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const common = require("./webpack.common.ts");
-const { merge } = require("webpack-merge");
-const path = require("path");
+const CompressionPlugin = require("compression-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const prodPlugins = [
   new CleanWebpackPlugin(),
@@ -24,6 +27,18 @@ const prodPlugins = [
       minifyCSS: true,
       minifyURLs: true,
     },
+  }),
+  new CompressionPlugin({
+    test: /\.(js|css|html|svg|ttf|woff2?)$/i,
+    algorithm: "brotliCompress",
+    compressionOptions: { level: 11 },
+    filename: "[path][base].br",
+  }),
+  new CompressionPlugin({
+    test: /\.(js|css|html|svg|ttf|woff2?)$/i,
+    algorithm: "gzip",
+    compressionOptions: { level: 9 },
+    filename: "[path][base].gz",
   }),
 ];
 
@@ -112,6 +127,7 @@ module.exports = merge(common, {
           keep_fnames: false,
         },
       }),
+      new CssMinimizerPlugin(),
     ],
   },
 
